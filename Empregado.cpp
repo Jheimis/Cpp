@@ -1,12 +1,11 @@
 #include <iostream>
 #include <locale.h>
 #include <stdlib.h>   
-#include <conio.h> 
+#include <conio.h>
 #include <cstdio> 
 
 using namespace std;
 
-#pragma region Definição da Struct
 struct Empregado
 {
     char nome[20];
@@ -14,29 +13,34 @@ struct Empregado
     float salario;
     struct Empregado *proximo; 
 };
-#pragma endregion
+
 
 int main (){
 
     setlocale(LC_ALL, "portuguese");
-    struct Empregado *primeiroNo = (struct Empregado*) malloc(sizeof(struct Empregado));
-    void inserirNoFinal(primeiroNo);
+    system("color 1F");
+
+    struct Empregado *primeiroNo = NULL;
+
+    struct Empregado* inserirNoFinal(struct Empregado*);
+    void imprimirLista(struct Empregado*);
 
     int num = 0;
 
-    while (num != '7'){
+    while (num != '8'){
 
         system("CLS");
         
         cout << ("\n");
-        cout << ("Digite a opção desejada:\n\n");
-        cout << ("\t1 - Inserir um nó no início\n");
-        cout << ("\t2 - Inserir um nó no final\n");
-        cout << ("\t3 - Remover nó do início\n");
-        cout << ("\t4 - Remover nó do final\n");
-        cout << ("\t5 - Mostrar informações dos funcionários com idade abaixo da idade informada\n");
-        cout << ("\t6 - Procurar o menor salário e remover o nó encontrado\n");
-        cout << ("\t7 - Sair\n");
+        cout << "Digite a opção desejada:\n\n";
+        cout << "\t1 - Inserir um nó no início\n";
+        cout << "\t2 - Inserir um nó no final\n";
+        cout << "\t3 - Remover nó do início\n";
+        cout << "\t4 - Remover nó do final\n";
+        cout << "\t5 - Mostrar informações dos funcionários com idade abaixo da idade informada\n";
+        cout << "\t6 - Procurar o menor salário e remover o nó encontrado\n";
+        cout << "\t7 - Imprimir Lista\n";
+        cout << "\t8 - Sair\n";
 
         num = getch();
 
@@ -44,87 +48,95 @@ int main (){
         {
             case '1':
                 system("CLS"); 
-                cout << ("\n");
-                cout << ("1 - Inserir um nó no início:");
+                cout << "\n";
+                cout << "1 - Inserir um nó no início:";
                 getch();
                 break;
 
             case '2':
-                inserirNoFinal();
+                primeiroNo = inserirNoFinal(primeiroNo);
                 break;
 
             case '3':
                 system("CLS");
-                cout << ("\n");
-                cout << ("3 - Remover nó do início:");
+                cout << "\n";
+                cout << "3 - Remover nó do início:";
                 getch();
                 break;
         
             case '4':
                 system("CLS");
-                cout << ("\n");
-                cout << ("4 - Remover nó do final:");
+                cout << "\n";
+                cout << "4 - Remover nó do final:";
                 getch();
                 break;
 
             case '5':
                 system("CLS");
-                cout << ("\n");
-                cout << ("5 - Mostrar informações dos funcionários com idade abaixo da idade informada:");
+                cout << "\n";
+                cout << "5 - Mostrar informações dos funcionários com idade abaixo da idade informada:";
                 getch();
                 break;
 
             case '6':
                 system("CLS");
-                cout << ("\n");
-                cout << ("6 - Procurar o menor salário e remover o nó encontrado:");
+                cout << "\n";
+                cout << "6 - Procurar o menor salário e remover o nó encontrado:";
                 getch();
                 break;
 
             case '7':
+                system("CLS"); 
+                cout << "7 - Imprimir Lista:";
+                imprimirLista(primeiroNo);
+                getch();
+                break;
+
+            case '8':
                 system("CLS");
-                cout << ("\n");
-                cout << ("\t\tSaindo...\n");
+                cout << "\n";
+                cout << "\t\tSaindo...\n";
                 system("PAUSE");
                 break;
             default:
                 system("CLS");
-                cout << ("\n");
-                cout << ("Opção inválida !!!");
+                cout << "\n";
+                cout << "Opção inválida !!!";
                 getch();
                 break;
         }
-    }
-    
+    } 
 }
 
-#pragma region Funções 
+#pragma region //Funções 
     void inserirNoInicio(){
 
     }
-    void inserirNoFinal(struct Empregado *primeiroNo){
-
-        system("CLS"); 
+    struct Empregado* inserirNoFinal(struct Empregado *lista){
         
-        cout << ("\n");
-        cout << ("2 - Inserir um nó no final:\n");
-        cout << ("\tInforme o nome do colaborador: ");
-        cin >> primeiroNo->nome;
-        cout << ("\n");
-        cout << ("\tInforme a idade do colaborador: ");
-        cin >> primeiroNo->idade;
-        cout << ("\n");
-        cout << ("\tInforme a quantidade de filhos: ");
-        cin >> primeiroNo->quantidadeFilhos;
-        cout << ("\n");
-        cout << ("\tInforme o salário: ");
-        cin >> primeiroNo->salario;
-        cout << ("\n");
+        system("CLS"); 
 
-       cout << (primeiroNo->nome);
+        struct Empregado *primeiroNo = lista;
+        struct Empregado *novoNo = (struct Empregado*) malloc(sizeof(struct Empregado));
 
-        getch();
+        struct Empregado* lerInformacaoes(struct Empregado*);
 
+        cout << "\n2 - Inserir um nó no final:\n";
+        novoNo = lerInformacaoes(novoNo);
+
+        if (lista != NULL){
+
+            while (lista->proximo != NULL)
+            {
+                lista = lista->proximo;
+            }  
+
+            lista->proximo = novoNo;
+            return primeiroNo;
+        }                 
+        else{
+            return novoNo;
+        }
     }
 
     void removerNoInicio(){
@@ -140,6 +152,35 @@ int main (){
     }
 
     void removerMenorSalario(){
+    }
 
+    void imprimirLista(struct Empregado *primeiroNo){
+      
+        while (primeiroNo != NULL)
+        {
+
+            cout << "\n\tNome do colaborador: " << primeiroNo->nome << "\n";
+            cout << "\tIdade do colaborador: " << primeiroNo->idade << "\n";
+            cout << "\tQuantidade de filhos: " << primeiroNo->quantidadeFilhos << "\n";
+            cout << "\tSalário: " << primeiroNo->salario << "\n\n";
+            primeiroNo = primeiroNo->proximo;
+
+        }
+    }
+
+    struct Empregado* lerInformacaoes(struct Empregado *novoNo){
+            
+        cout << "\tInforme o nome do colaborador: ";
+        cin >> novoNo->nome;
+        cout << "\tInforme a idade do colaborador: ";
+        cin >> novoNo->idade;
+        cout << "\tInforme a quantidade de filhos: ";
+        cin >> novoNo->quantidadeFilhos;
+        cout << "\tInforme o salário: ";
+        cin >> novoNo->salario;
+        cout << "\n";
+        novoNo->proximo = NULL;
+
+        return novoNo;
     }
 #pragma endregion

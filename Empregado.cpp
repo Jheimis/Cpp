@@ -27,7 +27,7 @@ int main (){
     struct Empregado* removerNoInicio(struct Empregado*);
     struct Empregado *removerNoFinal(struct Empregado*);
     // struct Empregado *removerMenorSalario(struct Empregado*);
-    // struct Empregado *menorIdadeInfomada(struct Empregado*);
+    void menorIdadeInfomada(struct Empregado*);
     void imprimirLista(struct Empregado*);
 
     int num = 0;
@@ -80,7 +80,7 @@ int main (){
             case '5':
                 system("CLS");
                 cout << "\n5 - Mostrar informações dos funcionários com idade abaixo da idade informada:\n";
-                //primeiroNo = menorIdadeInfomada(primeiroNo);
+                menorIdadeInfomada(primeiroNo);
                 getch();
                 break;
 
@@ -194,10 +194,24 @@ int main (){
         return lista;
     }
 
-    // struct Empregado* menorIdadeInfomada(struct Empregado *lista){
-    //     return;
-       
-    // }
+    void menorIdadeInfomada(struct Empregado *primeiroNo){
+
+        int idade;
+        cout << "\tInformar a idade para busca:";
+        cin >> idade;
+
+         while (primeiroNo != NULL)
+        {
+            if (primeiroNo->idade < idade)
+            {
+                cout << "\n\tNome do colaborador: " << primeiroNo->nome << "\n";
+                cout << "\tIdade do colaborador: " << primeiroNo->idade << "\n";
+                cout << "\tQuantidade de filhos: " << primeiroNo->quantidadeFilhos << "\n";
+                cout << "\tSalário R$: " << primeiroNo->salario << "\n\n";
+            }
+            primeiroNo = primeiroNo->proximo;
+                }
+    }
 
     // struct Empregado* removerMenorSalario(struct Empregado *lista){
     //     return;
@@ -210,8 +224,7 @@ int main (){
             cout << "\tLista vazia!";
             return;
         }
-        
-
+      
         while (primeiroNo != NULL)
         {
 

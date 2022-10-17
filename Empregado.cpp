@@ -23,6 +23,7 @@ int main (){
     struct Empregado *primeiroNo = NULL;
 
     struct Empregado* inserirNoFinal(struct Empregado*);
+    struct Empregado* inserirNoInicio(struct Empregado*);
     void imprimirLista(struct Empregado*);
 
     int num = 0;
@@ -49,11 +50,14 @@ int main (){
             case '1':
                 system("CLS"); 
                 cout << "\n";
-                cout << "1 - Inserir um nó no início:";
+                cout << "1 - Inserir um nó no início:\n";
+                primeiroNo = inserirNoInicio(primeiroNo);
                 getch();
                 break;
 
             case '2':
+                system("CLS"); 
+                cout << "\n2 - Inserir um nó no final:\n";
                 primeiroNo = inserirNoFinal(primeiroNo);
                 break;
 
@@ -109,19 +113,24 @@ int main (){
 }
 
 #pragma region //Funções 
-    void inserirNoInicio(){
+    struct Empregado* inserirNoInicio(struct Empregado *lista){
 
+        struct Empregado* lerInformacaoes(struct Empregado*);
+
+        struct Empregado *novoNo = (struct Empregado*) malloc(sizeof(struct Empregado));
+
+        novoNo = lerInformacaoes(novoNo);
+        novoNo->proximo = lista;
+
+        return novoNo;
     }
     struct Empregado* inserirNoFinal(struct Empregado *lista){
         
-        system("CLS"); 
+        struct Empregado* lerInformacaoes(struct Empregado*);
 
         struct Empregado *primeiroNo = lista;
         struct Empregado *novoNo = (struct Empregado*) malloc(sizeof(struct Empregado));
 
-        struct Empregado* lerInformacaoes(struct Empregado*);
-
-        cout << "\n2 - Inserir um nó no final:\n";
         novoNo = lerInformacaoes(novoNo);
 
         if (lista != NULL){
@@ -162,7 +171,7 @@ int main (){
             cout << "\n\tNome do colaborador: " << primeiroNo->nome << "\n";
             cout << "\tIdade do colaborador: " << primeiroNo->idade << "\n";
             cout << "\tQuantidade de filhos: " << primeiroNo->quantidadeFilhos << "\n";
-            cout << "\tSalário: " << primeiroNo->salario << "\n\n";
+            cout << "\tSalário R$: " << primeiroNo->salario << "\n\n";
             primeiroNo = primeiroNo->proximo;
 
         }
@@ -176,7 +185,7 @@ int main (){
         cin >> novoNo->idade;
         cout << "\tInforme a quantidade de filhos: ";
         cin >> novoNo->quantidadeFilhos;
-        cout << "\tInforme o salário: ";
+        cout << "\tInforme o salário R$: ";
         cin >> novoNo->salario;
         cout << "\n";
         novoNo->proximo = NULL;

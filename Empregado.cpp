@@ -21,9 +21,13 @@ int main (){
     system("color 1F");
 
     struct Empregado *primeiroNo = NULL;
-
+    
     struct Empregado* inserirNoFinal(struct Empregado*);
     struct Empregado* inserirNoInicio(struct Empregado*);
+    struct Empregado* removerNoInicio(struct Empregado*);
+    struct Empregado *removerNoFinal(struct Empregado*);
+    // struct Empregado *removerMenorSalario(struct Empregado*);
+    // struct Empregado *menorIdadeInfomada(struct Empregado*);
     void imprimirLista(struct Empregado*);
 
     int num = 0;
@@ -32,8 +36,7 @@ int main (){
 
         system("CLS");
         
-        cout << ("\n");
-        cout << "Digite a opção desejada:\n\n";
+        cout << "\nDigite a opção desejada:\n\n";
         cout << "\t1 - Inserir um nó no início\n";
         cout << "\t2 - Inserir um nó no final\n";
         cout << "\t3 - Remover nó do início\n";
@@ -49,8 +52,7 @@ int main (){
         {
             case '1':
                 system("CLS"); 
-                cout << "\n";
-                cout << "1 - Inserir um nó no início:\n";
+                cout << "\n1 - Inserir um nó no início:\n";
                 primeiroNo = inserirNoInicio(primeiroNo);
                 getch();
                 break;
@@ -63,49 +65,47 @@ int main (){
 
             case '3':
                 system("CLS");
-                cout << "\n";
-                cout << "3 - Remover nó do início:";
+                cout << "\n3 - Remover nó do início:\n";
+                primeiroNo = removerNoInicio(primeiroNo);
                 getch();
                 break;
         
             case '4':
                 system("CLS");
-                cout << "\n";
-                cout << "4 - Remover nó do final:";
+                cout << "\n4 - Remover nó do final:\n";
+                primeiroNo = removerNoFinal(primeiroNo);
                 getch();
                 break;
 
             case '5':
                 system("CLS");
-                cout << "\n";
-                cout << "5 - Mostrar informações dos funcionários com idade abaixo da idade informada:";
+                cout << "\n5 - Mostrar informações dos funcionários com idade abaixo da idade informada:\n";
+                //primeiroNo = menorIdadeInfomada(primeiroNo);
                 getch();
                 break;
 
             case '6':
                 system("CLS");
-                cout << "\n";
-                cout << "6 - Procurar o menor salário e remover o nó encontrado:";
+                cout << "\n6 - Procurar o menor salário e remover o nó encontrado:\n";
+               // primeiroNo = removerMenorSalario(primeiroNo);
                 getch();
                 break;
 
             case '7':
                 system("CLS"); 
-                cout << "7 - Imprimir Lista:";
+                cout << "7 - Imprimir Lista:\n";
                 imprimirLista(primeiroNo);
                 getch();
                 break;
 
             case '8':
                 system("CLS");
-                cout << "\n";
-                cout << "\t\tSaindo...\n";
+                cout << "\n\t\tSaindo...\n";
                 system("PAUSE");
                 break;
             default:
                 system("CLS");
-                cout << "\n";
-                cout << "Opção inválida !!!";
+                cout << "\nOpção inválida !!!";
                 getch();
                 break;
         }
@@ -120,10 +120,17 @@ int main (){
         struct Empregado *novoNo = (struct Empregado*) malloc(sizeof(struct Empregado));
 
         novoNo = lerInformacaoes(novoNo);
-        novoNo->proximo = lista;
+         if (lista != NULL){
+            
+            novoNo->proximo = lista;
 
-        return novoNo;
+            return novoNo;
+        }                 
+        else{
+            return novoNo;
+        }
     }
+
     struct Empregado* inserirNoFinal(struct Empregado *lista){
         
         struct Empregado* lerInformacaoes(struct Empregado*);
@@ -148,27 +155,67 @@ int main (){
         }
     }
 
-    void removerNoInicio(){
+    struct Empregado* removerNoInicio(struct Empregado *lista){
+        if (lista == NULL)
+        {
+            cout << "\tLista vazia!";
+        }
+        else
+        {
+            lista = lista->proximo;
+            cout << "\tValor removido !";
+        }
 
+        return lista;
     }
 
-    void removerNoFinal(){
+    struct Empregado* removerNoFinal(struct Empregado *lista){
 
+        if (lista == NULL)
+        {
+            cout << "\tLista vazia!";
+            return lista;
+        }
+        if (lista->proximo == NULL)
+        {
+            lista = NULL;
+            cout << "\tValor removido !";
+            return lista;
+        }
+
+        while (lista->proximo->proximo != NULL)
+        {
+            lista = lista->proximo;
+        }
+
+        lista->proximo = NULL;
+        cout << "\tValor removido !";
+
+        return lista;
     }
 
-    void menorIdadeInfomada(){
+    // struct Empregado* menorIdadeInfomada(struct Empregado *lista){
+    //     return;
        
-    }
+    // }
 
-    void removerMenorSalario(){
-    }
+    // struct Empregado* removerMenorSalario(struct Empregado *lista){
+    //     return;
+    // }
 
     void imprimirLista(struct Empregado *primeiroNo){
-      
+        
+        if (primeiroNo == NULL)
+        {
+            cout << "\tLista vazia!";
+            return;
+        }
+        
+
         while (primeiroNo != NULL)
         {
 
-            cout << "\n\tNome do colaborador: " << primeiroNo->nome << "\n";
+            cout << "\tNome do colaborador: " << primeiroNo->nome << "\n";
             cout << "\tIdade do colaborador: " << primeiroNo->idade << "\n";
             cout << "\tQuantidade de filhos: " << primeiroNo->quantidadeFilhos << "\n";
             cout << "\tSalário R$: " << primeiroNo->salario << "\n\n";
